@@ -1,3 +1,2 @@
-export function hello(): string {
-  return "Hello world!";
-}
+export { JSONHeroSearch } from "./JSONHeroSearch";
+export { search, SearchResult } from "./search";

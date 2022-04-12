@@ -1,22 +1,60 @@
-# Typescript Node Package Repository Template
+# 🤔 Fuzzy JSON Search
 
-> Create a new repo from this template to get started creating a Typescript npm package
+> VSCode style fuzzy search for JSON documents
 
 <!-- ![Coverage lines](./badges/badge-lines.svg) -->
-<!-- ![Tests](https://github.com/jsonhero-io/ts-node-package-template/actions/workflows/test.yml/badge.svg?branch=main) -->
-<!-- [![Downloads](https://img.shields.io/npm/dm/%40jsonhero%2Fts-node-package-template.svg)](https://npmjs.com/@jsonhero/ts-node-package-template) -->
-<!-- [![Install size](https://packagephobia.com/badge?p=%40jsonhero%2Fts-node-package-template)](https://packagephobia.com/result?p=@jsonhero/ts-node-package-template) -->
+<!-- ![Tests](https://github.com/jsonhero-io/fuzzy-json-search/actions/workflows/test.yml/badge.svg?branch=main) -->
+<!-- [![Downloads](https://img.shields.io/npm/dm/%40jsonhero%2Ffuzzy-json-search.svg)](https://npmjs.com/@jsonhero/fuzzy-json-search) -->
+<!-- [![Install size](https://packagephobia.com/badge?p=%40jsonhero%2Ffuzzy-json-search)](https://packagephobia.com/result?p=@jsonhero/fuzzy-json-search) -->
 
-## Features
+## 🚀 Features
 
-- Written in typescript
-- Github workflows for running tests and publishing package to NPM on Github release
-- Rollup for building commonjs and esm compatible npm package
-- ts-node and ts-jest integration
-- Generate coverage badges
-- ESLint with Typescript and prettier support
-- Pre-commit hooks to format code with prettier and run ESLint
+- Use VSCode style fuzzy search on a JSON document
+- Searches through key names, path, raw values and formatted values
 
-## Usage
+## 💻 Usage
 
-Create a new repository from this template on Github with the [following instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)
+Install Fuzzy JSON Search
+
+```bash
+$ npm install --save @jsonhero/fuzzy-json-search
+```
+
+The simplest way to search is to create an instance of `JSONHeroSearch` and pass it a JSON object:
+
+```typescript
+const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+const json = await response.json();
+
+const searcher = new JSONHeroSearch(json);
+
+const results = searcher.search("user");
+```
+
+## API
+
+### `JSONHeroSearch.search(query: string)`
+
+Performs a fuzzy search against the entire document, ordering by score. Will only return results that score more than 0.
+
+#### Returns `Array<SearchResult<JSONHeroPath>>>`
+
+`SearchResult<JSONHeroPath>` has the following properties:
+
+##### `item` is a `JSONHeroPath` representing the path to the key
+
+##### `score` is an `ItemScore`
+
+##### `ItemScore` has the following properties
+
+##### `score` is a number, the higher the score the better a match
+
+##### `labelMatch` is an array of `Match` objects
+
+##### `descriptionMatch` is an array of `Match` objects
+
+##### `rawValueMatch` is an array of `Match` objects
+
+##### `formattedValueMatch` is an array of `Match` objects
+
+##### `Match` is type `{ start: number; end: number }`
