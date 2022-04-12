@@ -72,7 +72,8 @@
       "json-summary",
       "text",
       "lcov"
-    ]
+    ],
+    "globalSetup": "./tests/setup.js"
   },
   "husky": {
     "hooks": {
