@@ -1,4 +1,4 @@
-# 🤔 Fuzzy JSON Search
+# Fuzzy JSON Search
 
 > VSCode style fuzzy search for JSON documents
 

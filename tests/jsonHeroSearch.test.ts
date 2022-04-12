@@ -366,41 +366,6 @@ test("JSONHeroSearch can search with just json and a query", () => {
           "score": 95,
         },
       },
-      Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "user",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "photos",
-            },
-            SimpleKeyPathComponent {
-              "isArray": true,
-              "keyName": "0",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "url",
-            },
-          ],
-        },
-        "score": Object {
-          "rawValueMatch": Array [
-            Object {
-              "end": 23,
-              "start": 17,
-            },
-          ],
-          "score": 87,
-        },
-      },
     ]
   `);
 });
@@ -418,7 +383,7 @@ test("JSONHeroSearch should be fast enough, and results cached", () => {
 
   let end = performance.now();
 
-  expect(end - start).toBeLessThan(500);
+  expect(end - start).toBeLessThan(350);
 
   start = performance.now();
 

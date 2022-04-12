@@ -6,6 +6,7 @@ import { search, SearchResult } from "./search";
 
 export type JSONHeroSearchOptions = {
   cacheSettings?: {
+    enabled?: boolean;
     max?: number;
   };
 };
@@ -16,11 +17,20 @@ export class JSONHeroSearch {
   accessor: IItemAccessor<JSONHeroPath>;
   scoreCache: Map<number, ItemScore> = new Map();
   searchCache: LRUCache<string, Array<SearchResult<JSONHeroPath>>>;
+  options: Required<JSONHeroSearchOptions>;
 
   constructor(json: unknown, options?: JSONHeroSearchOptions) {
     this.json = json;
     this.items = [];
     this.accessor = new JSONHeroPathAccessor(this.json);
+    this.options = {
+      cacheSettings: {
+        enabled: true,
+        max: 100,
+        ...options?.cacheSettings,
+      },
+      ...options,
+    };
 
     this.searchCache = new LRUCache<string, Array<SearchResult<JSONHeroPath>>>({
       max: options?.cacheSettings?.max ?? 100,
@@ -36,7 +46,7 @@ export class JSONHeroSearch {
   }
 
   search(query: string): Array<SearchResult<JSONHeroPath>> {
-    if (this.searchCache.has(query)) {
+    if (this.options.cacheSettings.enabled && this.searchCache.has(query)) {
       return this.searchCache.get(query) ?? [];
     }
 
@@ -46,7 +56,7 @@ export class JSONHeroSearch {
 
     const results = search(this.items, preparedQuery, true, this.accessor, this.scoreCache);
 
-    this.searchCache.set(query, results);
+    if (this.options.cacheSettings.enabled) this.searchCache.set(query, results);
 
     return results;
   }
@@ -98,20 +108,22 @@ export class JSONHeroPathAccessor implements IItemAccessor<JSONHeroPath> {
     return rawValue;
 
     function doGetRawValue(json: unknown) {
-      const inferred = inferType(path.first(json));
+      const result = getFirstAtPath(json, path);
 
-      switch (inferred.name) {
-        case "string":
-          return inferred.value;
-        case "int":
-        case "float":
-          return inferred.value.toString();
-        case "null":
-          return "null";
-        case "bool":
-          return inferred.value ? "true" : "false";
-        default:
-          return;
+      if (typeof result === "string") {
+        return result;
+      }
+
+      if (typeof result === "boolean") {
+        return result ? "true" : "false";
+      }
+
+      if (result === "null") {
+        return "null";
+      }
+
+      if (typeof result === "number") {
+        return result.toString();
       }
     }
   }
@@ -132,7 +144,7 @@ export class JSONHeroPathAccessor implements IItemAccessor<JSONHeroPath> {
     return formattedValue;
 
     function doGetFormattedValue(json: unknown) {
-      const inferred = inferType(path.first(json));
+      const inferred = inferType(getFirstAtPath(json, path));
 
       switch (inferred.name) {
         case "string": {
@@ -185,4 +197,28 @@ function getAllPaths(json: unknown): Array<JSONHeroPath> {
   walk(json, new JSONHeroPath("$"));
 
   return paths;
+}
+
+function getFirstAtPath(json: unknown, path: JSONHeroPath): unknown {
+  let result = json;
+
+  for (const component of path.components) {
+    if (result === undefined) {
+      return undefined;
+    }
+
+    if (Array.isArray(result) && component.isArray) {
+      result = result[Number(component.toString())];
+    } else {
+      return undefined;
+    }
+
+    if (typeof result === "object" && result !== null) {
+      result = result[component.toString() as keyof typeof result];
+    } else {
+      return undefined;
+    }
+  }
+
+  return result;
 }
