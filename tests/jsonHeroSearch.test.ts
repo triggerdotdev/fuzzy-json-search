@@ -383,7 +383,7 @@ test("JSONHeroSearch should be fast enough, and results cached", () => {
 
   let end = performance.now();
 
-  expect(end - start).toBeLessThan(350);
+  expect(end - start).toBeLessThan(500);
 
   start = performance.now();
 

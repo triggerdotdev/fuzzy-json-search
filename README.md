@@ -2,7 +2,6 @@
 
 > VSCode style fuzzy search for JSON documents
 
-<!-- ![Coverage lines](./badges/badge-lines.svg) -->
 <!-- ![Tests](https://github.com/jsonhero-io/fuzzy-json-search/actions/workflows/test.yml/badge.svg?branch=main) -->
 <!-- [![Downloads](https://img.shields.io/npm/dm/%40jsonhero%2Ffuzzy-json-search.svg)](https://npmjs.com/@jsonhero/fuzzy-json-search) -->
 <!-- [![Install size](https://packagephobia.com/badge?p=%40jsonhero%2Ffuzzy-json-search)](https://packagephobia.com/result?p=@jsonhero/fuzzy-json-search) -->
