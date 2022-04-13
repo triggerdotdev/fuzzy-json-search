@@ -13,18 +13,16 @@ export type ItemScore = {
    */
   score: number;
 
+  label?: string;
   /**
    * Matches within the label.
    */
   labelMatch?: Match[];
 
+  description?: string;
   descriptionMatch?: Match[];
 
-  /**
-   * Matches within the path.
-   */
-  pathMatch?: Match[];
-
+  rawValue?: string;
   /**
    * Matches within the rawValue.
    * Only available if the item has a rawValue.
@@ -33,6 +31,7 @@ export type ItemScore = {
    */
   rawValueMatch?: Match[];
 
+  formattedValue?: string;
   /**
    * Matches within the formattedValue.
    * Only available if the item has a formattedValue.
@@ -240,6 +239,10 @@ function doScoreItemFuzzy(
       score: PATH_IDENTITY_SCORE,
       labelMatch: [{ start: 0, end: label.length }],
       descriptionMatch: description ? [{ start: 0, end: description.length }] : undefined,
+      label,
+      description,
+      rawValue,
+      formattedValue,
     };
   }
 
@@ -382,6 +385,10 @@ function doScoreItemFuzzySingle(
         {
           score: baseScore + labelScore,
           labelMatch: labelPrefixMatch || createMatches(labelPositions),
+          label,
+          description,
+          rawValue,
+          formattedValue,
         },
         rawValue,
         formattedValue,
@@ -436,7 +443,15 @@ function doScoreItemFuzzySingle(
       });
 
       return integrateValueScores(
-        { score: labelDescriptionScore, labelMatch, descriptionMatch },
+        {
+          score: labelDescriptionScore,
+          labelMatch,
+          descriptionMatch,
+          label,
+          description,
+          rawValue,
+          formattedValue,
+        },
         rawValue,
         formattedValue,
         query,

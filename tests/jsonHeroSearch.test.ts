@@ -50,13 +50,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "",
           "descriptionMatch": undefined,
+          "formattedValue": "null",
+          "label": "foo",
           "labelMatch": Array [
             Object {
               "end": 3,
               "start": 0,
             },
           ],
+          "rawValue": undefined,
           "score": 262144,
         },
       },
@@ -86,6 +90,7 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "github.profile.repo",
           "descriptionMatch": Array [
             Object {
               "end": 11,
@@ -96,12 +101,15 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 18,
             },
           ],
+          "formattedValue": "null",
+          "label": "description",
           "labelMatch": Array [
             Object {
               "end": 10,
               "start": 9,
             },
           ],
+          "rawValue": undefined,
           "score": 6,
         },
       },
@@ -124,13 +132,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "",
           "descriptionMatch": undefined,
+          "formattedValue": "null",
+          "label": "github",
           "labelMatch": Array [
             Object {
               "end": 6,
               "start": 0,
             },
           ],
+          "rawValue": undefined,
           "score": 262144,
         },
       },
@@ -152,13 +164,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "github",
           "descriptionMatch": Array [
             Object {
               "end": 6,
               "start": 0,
             },
           ],
+          "formattedValue": "null",
+          "label": "profile",
           "labelMatch": Array [],
+          "rawValue": undefined,
           "score": 95,
         },
       },
@@ -184,13 +200,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "github.profile",
           "descriptionMatch": Array [
             Object {
               "end": 6,
               "start": 0,
             },
           ],
+          "formattedValue": "null",
+          "label": "id",
           "labelMatch": Array [],
+          "rawValue": undefined,
           "score": 95,
         },
       },
@@ -216,13 +236,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "github.profile",
           "descriptionMatch": Array [
             Object {
               "end": 6,
               "start": 0,
             },
           ],
+          "formattedValue": "null",
+          "label": "name",
           "labelMatch": Array [],
+          "rawValue": undefined,
           "score": 95,
         },
       },
@@ -248,13 +272,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "github.profile",
           "descriptionMatch": Array [
             Object {
               "end": 6,
               "start": 0,
             },
           ],
+          "formattedValue": "null",
+          "label": "repo",
           "labelMatch": Array [],
+          "rawValue": undefined,
           "score": 95,
         },
       },
@@ -284,13 +312,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "github.profile.repo",
           "descriptionMatch": Array [
             Object {
               "end": 6,
               "start": 0,
             },
           ],
+          "formattedValue": "null",
+          "label": "id",
           "labelMatch": Array [],
+          "rawValue": undefined,
           "score": 95,
         },
       },
@@ -320,13 +352,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "github.profile.repo",
           "descriptionMatch": Array [
             Object {
               "end": 6,
               "start": 0,
             },
           ],
+          "formattedValue": "null",
+          "label": "name",
           "labelMatch": Array [],
+          "rawValue": undefined,
           "score": 95,
         },
       },
@@ -356,13 +392,17 @@ test("JSONHeroSearch can search with just json and a query", () => {
           ],
         },
         "score": Object {
+          "description": "github.profile.repo",
           "descriptionMatch": Array [
             Object {
               "end": 6,
               "start": 0,
             },
           ],
+          "formattedValue": "null",
+          "label": "description",
           "labelMatch": Array [],
+          "rawValue": undefined,
           "score": 95,
         },
       },
