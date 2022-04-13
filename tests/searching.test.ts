@@ -980,6 +980,10 @@ test("searching results", () => {
       Object {
         "item": "$.data.0.text",
         "score": Object {
+          "description": "data.0",
+          "formattedValue": "We believe the best future version of our API will come from building it with YOU. Here’s to another great year with everyone who builds on the Twitter platform. We can’t wait to continue working with you in the new year. https://t.co/yvxdK6aOo2",
+          "label": "text",
+          "rawValue": "We believe the best future version of our API will come from building it with YOU. Here’s to another great year with everyone who builds on the Twitter platform. We can’t wait to continue working with you in the new year. https://t.co/yvxdK6aOo2",
           "rawValueMatch": Array [
             Object {
               "end": 146,
@@ -1004,6 +1008,10 @@ test("searching results", () => {
       Object {
         "item": "$.data.0.entities.urls.0.expanded_url",
         "score": Object {
+          "description": "data.0.entities.urls.0",
+          "formattedValue": "https://twitter.com/LovesNandos/status/1211797914437259264/photo/1",
+          "label": "expanded_url",
+          "rawValue": "https://twitter.com/LovesNandos/status/1211797914437259264/photo/1",
           "rawValueMatch": Array [
             Object {
               "end": 10,
@@ -1028,6 +1036,12 @@ test("searching results", () => {
       Object {
         "item": "$.data.0.context_annotations.1.entity.description",
         "score": Object {
+          "description": "data.0.context_annotations.1.entity",
+          "formattedValue": "Catch fireworks and other celebrations as people across the globe enter the new year.
+    Photo via @GettyImages ",
+          "label": "description",
+          "rawValue": "Catch fireworks and other celebrations as people across the globe enter the new year.
+    Photo via @GettyImages ",
           "rawValueMatch": Array [
             Object {
               "end": 73,
@@ -1052,6 +1066,12 @@ test("searching results", () => {
       Object {
         "item": "$.data.0.context_annotations.4.entity.description",
         "score": Object {
+          "description": "data.0.context_annotations.4.entity",
+          "formattedValue": "Catch fireworks and other celebrations as people across the globe enter the new year.
+    Photo via @GettyImages ",
+          "label": "description",
+          "rawValue": "Catch fireworks and other celebrations as people across the globe enter the new year.
+    Photo via @GettyImages ",
           "rawValueMatch": Array [
             Object {
               "end": 73,

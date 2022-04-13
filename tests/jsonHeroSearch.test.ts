@@ -37,22 +37,11 @@ test("JSONHeroSearch can search with just json and a query", () => {
   expect(searcher.search("foo")).toMatchInlineSnapshot(`
     Array [
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "foo",
-            },
-          ],
-        },
+        "item": "$.foo",
         "score": Object {
           "description": "",
           "descriptionMatch": undefined,
-          "formattedValue": "null",
+          "formattedValue": "bar",
           "label": "foo",
           "labelMatch": Array [
             Object {
@@ -60,35 +49,12 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 0,
             },
           ],
-          "rawValue": undefined,
+          "rawValue": "bar",
           "score": 262144,
         },
       },
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "profile",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "repo",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "description",
-            },
-          ],
-        },
+        "item": "$.github.profile.repo.description",
         "score": Object {
           "description": "github.profile.repo",
           "descriptionMatch": Array [
@@ -101,7 +67,7 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 18,
             },
           ],
-          "formattedValue": "null",
+          "formattedValue": "A JSON IDE for the web",
           "label": "description",
           "labelMatch": Array [
             Object {
@@ -109,7 +75,7 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 9,
             },
           ],
-          "rawValue": undefined,
+          "rawValue": "A JSON IDE for the web",
           "score": 6,
         },
       },
@@ -119,22 +85,11 @@ test("JSONHeroSearch can search with just json and a query", () => {
   expect(searcher.search("github")).toMatchInlineSnapshot(`
     Array [
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-          ],
-        },
+        "item": "$.github",
         "score": Object {
           "description": "",
           "descriptionMatch": undefined,
-          "formattedValue": "null",
+          "formattedValue": undefined,
           "label": "github",
           "labelMatch": Array [
             Object {
@@ -147,22 +102,7 @@ test("JSONHeroSearch can search with just json and a query", () => {
         },
       },
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "profile",
-            },
-          ],
-        },
+        "item": "$.github.profile",
         "score": Object {
           "description": "github",
           "descriptionMatch": Array [
@@ -171,7 +111,7 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 0,
             },
           ],
-          "formattedValue": "null",
+          "formattedValue": undefined,
           "label": "profile",
           "labelMatch": Array [],
           "rawValue": undefined,
@@ -179,26 +119,7 @@ test("JSONHeroSearch can search with just json and a query", () => {
         },
       },
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "profile",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "id",
-            },
-          ],
-        },
+        "item": "$.github.profile.id",
         "score": Object {
           "description": "github.profile",
           "descriptionMatch": Array [
@@ -207,34 +128,15 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 0,
             },
           ],
-          "formattedValue": "null",
+          "formattedValue": "ericallam",
           "label": "id",
           "labelMatch": Array [],
-          "rawValue": undefined,
+          "rawValue": "ericallam",
           "score": 95,
         },
       },
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "profile",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "name",
-            },
-          ],
-        },
+        "item": "$.github.profile.name",
         "score": Object {
           "description": "github.profile",
           "descriptionMatch": Array [
@@ -243,34 +145,15 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 0,
             },
           ],
-          "formattedValue": "null",
+          "formattedValue": "Eric Allam",
           "label": "name",
           "labelMatch": Array [],
-          "rawValue": undefined,
+          "rawValue": "Eric Allam",
           "score": 95,
         },
       },
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "profile",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "repo",
-            },
-          ],
-        },
+        "item": "$.github.profile.repo",
         "score": Object {
           "description": "github.profile",
           "descriptionMatch": Array [
@@ -279,7 +162,7 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 0,
             },
           ],
-          "formattedValue": "null",
+          "formattedValue": undefined,
           "label": "repo",
           "labelMatch": Array [],
           "rawValue": undefined,
@@ -287,30 +170,7 @@ test("JSONHeroSearch can search with just json and a query", () => {
         },
       },
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "profile",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "repo",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "id",
-            },
-          ],
-        },
+        "item": "$.github.profile.repo.id",
         "score": Object {
           "description": "github.profile.repo",
           "descriptionMatch": Array [
@@ -319,38 +179,15 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 0,
             },
           ],
-          "formattedValue": "null",
+          "formattedValue": "ericallam/jsonhero",
           "label": "id",
           "labelMatch": Array [],
-          "rawValue": undefined,
+          "rawValue": "ericallam/jsonhero",
           "score": 95,
         },
       },
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "profile",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "repo",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "name",
-            },
-          ],
-        },
+        "item": "$.github.profile.repo.name",
         "score": Object {
           "description": "github.profile.repo",
           "descriptionMatch": Array [
@@ -359,38 +196,15 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 0,
             },
           ],
-          "formattedValue": "null",
+          "formattedValue": "jsonhero",
           "label": "name",
           "labelMatch": Array [],
-          "rawValue": undefined,
+          "rawValue": "jsonhero",
           "score": 95,
         },
       },
       Object {
-        "item": JSONHeroPath {
-          "components": Array [
-            StartPathComponent {
-              "isArray": false,
-              "keyName": "$",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "github",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "profile",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "repo",
-            },
-            SimpleKeyPathComponent {
-              "isArray": false,
-              "keyName": "description",
-            },
-          ],
-        },
+        "item": "$.github.profile.repo.description",
         "score": Object {
           "description": "github.profile.repo",
           "descriptionMatch": Array [
@@ -399,11 +213,71 @@ test("JSONHeroSearch can search with just json and a query", () => {
               "start": 0,
             },
           ],
-          "formattedValue": "null",
+          "formattedValue": "A JSON IDE for the web",
           "label": "description",
           "labelMatch": Array [],
-          "rawValue": undefined,
+          "rawValue": "A JSON IDE for the web",
           "score": 95,
+        },
+      },
+      Object {
+        "item": "$.user.photos.0.url",
+        "score": Object {
+          "description": "user.photos.0",
+          "formattedValue": "https://avatars0.githubusercontent.com/u/1234?v=4",
+          "label": "url",
+          "rawValue": "https://avatars0.githubusercontent.com/u/1234?v=4",
+          "rawValueMatch": Array [
+            Object {
+              "end": 23,
+              "start": 17,
+            },
+          ],
+          "score": 87,
+        },
+      },
+    ]
+  `);
+});
+
+test("custom formatter option", () => {
+  const json = {
+    dateString: "2020-01-01T00:00:00.000Z",
+  };
+
+  function dateStringFormatter(value: unknown): string | undefined {
+    if (typeof value === "string") {
+      try {
+        return new Date(value).toString();
+      } catch {
+        return value;
+      }
+    }
+
+    return;
+  }
+
+  const searcher = new JSONHeroSearch(json, { formatter: dateStringFormatter });
+
+  const results = searcher.search("Jan");
+
+  expect(results.length).toBe(1);
+  expect(results).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "item": "$.dateString",
+        "score": Object {
+          "description": "",
+          "formattedValue": "Wed Jan 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)",
+          "formattedValueMatch": Array [
+            Object {
+              "end": 7,
+              "start": 4,
+            },
+          ],
+          "label": "dateString",
+          "rawValue": "2020-01-01T00:00:00.000Z",
+          "score": 23,
         },
       },
     ]

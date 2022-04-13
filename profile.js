@@ -1004,6 +1004,6 @@ const json = {
 const searcher = new JSONHeroSearch(json, { cacheSettings: { enabled: false } });
 searcher.prepareIndex();
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 10; i++) {
   searcher.search("url");
 }

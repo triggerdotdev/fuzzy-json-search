@@ -461,7 +461,13 @@ function doScoreItemFuzzySingle(
   }
 
   return integrateValueScores(
-    NO_ITEM_SCORE,
+    {
+      score: 0,
+      label,
+      description,
+      rawValue,
+      formattedValue,
+    },
     rawValue,
     formattedValue,
     query,

@@ -1,38 +1,39 @@
-import { inferType } from "@jsonhero/json-infer-types";
-import { JSONHeroPath } from "@jsonhero/path";
 import LRUCache from "lru-cache";
 import { IItemAccessor, ItemScore, prepareQuery } from "./fuzzyScoring";
 import { search, SearchResult } from "./search";
+
+export type JSONHeroSearchFormatter = (value: unknown) => string | undefined;
 
 export type JSONHeroSearchOptions = {
   cacheSettings?: {
     enabled?: boolean;
     max?: number;
   };
+  accessor?: IItemAccessor<string>;
+  formatter?: JSONHeroSearchFormatter;
 };
 
 export class JSONHeroSearch {
   json: unknown;
-  items: JSONHeroPath[];
-  accessor: IItemAccessor<JSONHeroPath>;
+  items: string[];
   scoreCache: Map<number, ItemScore> = new Map();
-  searchCache: LRUCache<string, Array<SearchResult<JSONHeroPath>>>;
-  options: Required<JSONHeroSearchOptions>;
+  searchCache: LRUCache<string, Array<SearchResult<string>>>;
+  options: Required<Omit<JSONHeroSearchOptions, "formatter">>;
 
   constructor(json: unknown, options?: JSONHeroSearchOptions) {
     this.json = json;
     this.items = [];
-    this.accessor = new JSONHeroPathAccessor(this.json);
     this.options = {
       cacheSettings: {
         enabled: true,
         max: 100,
         ...options?.cacheSettings,
       },
+      accessor: new JSONHeroSearchAccessor(this.json, options?.formatter ?? defaultFormatter),
       ...options,
     };
 
-    this.searchCache = new LRUCache<string, Array<SearchResult<JSONHeroPath>>>({
+    this.searchCache = new LRUCache<string, Array<SearchResult<string>>>({
       max: options?.cacheSettings?.max ?? 100,
     });
   }
@@ -45,7 +46,7 @@ export class JSONHeroSearch {
     this.items = getAllPaths(this.json);
   }
 
-  search(query: string): Array<SearchResult<JSONHeroPath>> {
+  search(query: string): Array<SearchResult<string>> {
     if (this.options.cacheSettings.enabled && this.searchCache.has(query)) {
       return this.searchCache.get(query) ?? [];
     }
@@ -54,7 +55,7 @@ export class JSONHeroSearch {
 
     const preparedQuery = prepareQuery(query);
 
-    const results = search(this.items, preparedQuery, true, this.accessor, this.scoreCache);
+    const results = search(this.items, preparedQuery, true, this.options.accessor, this.scoreCache);
 
     if (this.options.cacheSettings.enabled) this.searchCache.set(query, results);
 
@@ -62,38 +63,52 @@ export class JSONHeroSearch {
   }
 }
 
-export class JSONHeroPathAccessor implements IItemAccessor<JSONHeroPath> {
+function lastComponent(path: string): string {
+  const components = path.split(".");
+
+  return components[components.length - 1];
+}
+
+function isArray(path: string): boolean {
+  const last = lastComponent(path);
+
+  return last.match(/^\d+$/) !== null;
+}
+
+export class JSONHeroSearchAccessor implements IItemAccessor<string> {
   json: unknown;
+  formatter: JSONHeroSearchFormatter;
   valueCache: Map<string, string> = new Map<string, string>();
 
-  constructor(json: unknown) {
+  constructor(json: unknown, formatter: JSONHeroSearchFormatter) {
     this.json = json;
+    this.formatter = formatter;
   }
 
-  getIsArrayItem(path: JSONHeroPath): boolean {
-    return path.lastComponent!.isArray;
+  getIsArrayItem(path: string): boolean {
+    return isArray(path);
   }
 
-  getItemLabel(path: JSONHeroPath): string {
-    return path.lastComponent!.toString();
+  getItemLabel(path: string): string {
+    return lastComponent(path);
   }
 
-  getItemDescription(path: JSONHeroPath): string {
+  getItemDescription(path: string): string {
     // Get all but the first and last component
-    const components = path.components.slice(1, -1);
+    const components = path.split(".").slice(1, -1);
 
-    return components.map((c) => c.toString()).join(".");
+    return components.join(".");
   }
 
-  getItemPath(path: JSONHeroPath): string {
+  getItemPath(path: string): string {
     // Get all but the first component
-    const components = path.components.slice(1);
+    const components = path.split(".").slice(1);
 
-    return components.map((c) => c.toString()).join(".");
+    return components.join(".");
   }
 
-  getRawValue(path: JSONHeroPath): string | undefined {
-    const cacheKey = `${path.toString()}_raw`;
+  getRawValue(path: string): string | undefined {
+    const cacheKey = `${path}_raw`;
 
     if (this.valueCache.has(cacheKey)) {
       return this.valueCache.get(cacheKey);
@@ -128,14 +143,14 @@ export class JSONHeroPathAccessor implements IItemAccessor<JSONHeroPath> {
     }
   }
 
-  getFormattedValue(path: JSONHeroPath): string | undefined {
-    const cacheKey = `${path.toString()}_formatted`;
+  getFormattedValue(path: string): string | undefined {
+    const cacheKey = `${path}_formatted`;
 
     if (this.valueCache.has(cacheKey)) {
       return this.valueCache.get(cacheKey);
     }
 
-    const formattedValue = doGetFormattedValue(this.json);
+    const formattedValue = doGetFormattedValue(this.json, this.formatter);
 
     if (formattedValue) {
       this.valueCache.set(cacheKey, formattedValue);
@@ -143,82 +158,78 @@ export class JSONHeroPathAccessor implements IItemAccessor<JSONHeroPath> {
 
     return formattedValue;
 
-    function doGetFormattedValue(json: unknown) {
-      const inferred = inferType(getFirstAtPath(json, path));
+    function doGetFormattedValue(json: unknown, formatter: JSONHeroSearchFormatter) {
+      const result = getFirstAtPath(json, path);
 
-      switch (inferred.name) {
-        case "string": {
-          if (!inferred.format) {
-            return inferred.value;
-          }
-
-          switch (inferred.format.name) {
-            case "datetime": {
-              const date = new Date(inferred.value);
-
-              return date.toString();
-            }
-            default: {
-              return inferred.value;
-            }
-          }
-        }
-        case "int":
-        case "float":
-          return inferred.value.toString();
-        case "null":
-          return "null";
-        case "bool":
-          return inferred.value ? "true" : "false";
-        default:
-          return;
-      }
+      return formatter(result);
     }
   }
 }
 
-function getAllPaths(json: unknown): Array<JSONHeroPath> {
-  const paths: Array<JSONHeroPath> = [];
+function getAllPaths(json: unknown): Array<string> {
+  const paths: Array<string> = [];
 
-  function walk(json: unknown, path: JSONHeroPath) {
+  function walk(json: unknown, path: string) {
     paths.push(path);
 
     if (Array.isArray(json)) {
       for (let i = 0; i < json.length; i++) {
-        walk(json[i], path.child(i.toString()));
+        walk(json[i], `${path}.${i}`);
       }
     } else if (typeof json === "object" && json !== null) {
       for (const key of Object.keys(json)) {
-        walk(json[key as keyof typeof json], path.child(key));
+        walk(json[key as keyof typeof json], `${path}.${key}`);
       }
     }
   }
 
-  walk(json, new JSONHeroPath("$"));
+  walk(json, "$");
 
   return paths;
 }
 
-function getFirstAtPath(json: unknown, path: JSONHeroPath): unknown {
+function getFirstAtPath(json: unknown, path: string): unknown {
   let result = json;
 
-  for (const component of path.components) {
+  const components = path.split(".");
+
+  for (const component of components) {
+    if (component === "$") {
+      continue;
+    }
+
     if (result === undefined) {
-      return undefined;
+      return;
     }
 
-    if (Array.isArray(result) && component.isArray) {
-      result = result[Number(component.toString())];
+    if (Array.isArray(result) && component.match(/^\d+$/)) {
+      result = result[Number(component)];
     } else {
-      return undefined;
-    }
-
-    if (typeof result === "object" && result !== null) {
-      result = result[component.toString() as keyof typeof result];
-    } else {
-      return undefined;
+      if (typeof result === "object" && result !== null) {
+        result = result[component as keyof typeof result];
+      } else {
+        return result;
+      }
     }
   }
 
   return result;
+}
+
+function defaultFormatter(value: unknown): string | undefined {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (typeof value === "boolean") {
+    return value ? "true" : "false";
+  }
+
+  if (value === null) {
+    return "null";
+  }
+
+  if (typeof value === "number") {
+    return value.toString();
+  }
 }

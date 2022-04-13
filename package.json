@@ -24,7 +24,8 @@
   "scripts": {
     "clean": "rimraf lib",
     "check-types": "tsc --noEmit",
-    "test": "jest --coverage",
+    "test": "jest",
+    "test:cov": "jest --coverage",
     "test:watch": "jest --watchAll",
     "test:badges": "npm t && jest-coverage-badges --output ./badges",
     "build": "rollup -c",
@@ -46,6 +47,8 @@
   "author": "Eric Allam",
   "license": "MIT",
   "devDependencies": {
+    "@jsonhero/path": "^1.0.19",
+    "@jsonhero/json-infer-types": "^1.2.9",
     "@rollup/plugin-node-resolve": "^13.1.2",
     "@types/jest": "^27.0.2",
     "@types/lru-cache": "^7.6.1",
@@ -80,8 +83,6 @@
     }
   },
   "dependencies": {
-    "@jsonhero/json-infer-types": "^1.2.9",
-    "@jsonhero/path": "^1.0.19",
     "lru-cache": "^7.8.1"
   }
 }

@@ -36,11 +36,11 @@ const results = searcher.search("user");
 
 Performs a fuzzy search against the entire document, ordering by score. Will only return results that score more than 0.
 
-#### Returns `Array<SearchResult<JSONHeroPath>>>`
+#### Returns `Array<SearchResult<string>>>`
 
-`SearchResult<JSONHeroPath>` has the following properties:
+`SearchResult<string>` has the following properties:
 
-##### `item` is a `JSONHeroPath` representing the path to the key
+##### `item` is a `string` representing the path to the key
 
 ##### `score` is an `ItemScore`
 
