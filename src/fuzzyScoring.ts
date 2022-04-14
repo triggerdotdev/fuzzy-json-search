@@ -338,6 +338,10 @@ function doScoreItemFuzzyMultiple(
       totalFormattedValueMatches.length > 0
         ? normalizeMatches(totalFormattedValueMatches)
         : undefined,
+    label,
+    description,
+    rawValue,
+    formattedValue,
   };
 }
 
