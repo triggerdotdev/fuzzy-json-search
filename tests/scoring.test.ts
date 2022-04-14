@@ -92,6 +92,12 @@ test("scoreItem", () => {
   );
   expect(pathIdentity.rawValueMatch).toBeUndefined();
   expect(pathIdentity.formattedValueMatch).toBeUndefined();
+  expect(pathIdentity.label).toBe("someKey123");
+  expect(pathIdentity.description).toBe("xyz.some.path");
+  expect(pathIdentity.rawValue).toBe("2022-01-01T00:00:00.000Z");
+  expect(pathIdentity.formattedValue).toBe(
+    "Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)",
+  );
 
   const labelPrefix = scoreItem(jsonPath, "som", true, jsonHeroPathAccessor);
   expect(labelPrefix.score).toBeGreaterThan(0);
@@ -101,6 +107,12 @@ test("scoreItem", () => {
   expect(labelPrefix.labelMatch?.length).toBe(1);
   expect(labelPrefix.labelMatch?.[0].start).toBe(0);
   expect(labelPrefix.labelMatch?.[0].end).toBe("som".length);
+  expect(labelPrefix.label).toBe("someKey123");
+  expect(labelPrefix.description).toBe("xyz.some.path");
+  expect(labelPrefix.rawValue).toBe("2022-01-01T00:00:00.000Z");
+  expect(labelPrefix.formattedValue).toBe(
+    "Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)",
+  );
 
   const labelCamelcase = scoreItem(jsonPath, "sK", true, jsonHeroPathAccessor);
   expect(labelCamelcase.score).toBeGreaterThan(0);
@@ -112,6 +124,12 @@ test("scoreItem", () => {
   expect(labelCamelcase.labelMatch?.[0].end).toBe(1);
   expect(labelCamelcase.labelMatch?.[1].start).toBe(4);
   expect(labelCamelcase.labelMatch?.[1].end).toBe(5);
+  expect(labelCamelcase.label).toBe("someKey123");
+  expect(labelCamelcase.description).toBe("xyz.some.path");
+  expect(labelCamelcase.rawValue).toBe("2022-01-01T00:00:00.000Z");
+  expect(labelCamelcase.formattedValue).toBe(
+    "Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)",
+  );
 
   const labelMatch = scoreItem(jsonPath, "ok", true, jsonHeroPathAccessor);
   expect(labelMatch.score).toBeGreaterThan(0);
@@ -123,6 +141,10 @@ test("scoreItem", () => {
   expect(labelMatch.labelMatch?.[0].end).toBe(2);
   expect(labelMatch.labelMatch?.[1].start).toBe(4);
   expect(labelMatch.labelMatch?.[1].end).toBe(5);
+  expect(labelMatch.label).toBe("someKey123");
+  expect(labelMatch.description).toBe("xyz.some.path");
+  expect(labelMatch.rawValue).toBe("2022-01-01T00:00:00.000Z");
+  expect(labelMatch.formattedValue).toBe("Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)");
 
   const pathMatch = scoreItem(jsonPath, "xyz123", true, jsonHeroPathAccessor);
   expect(pathMatch.score).toBeGreaterThan(0);
@@ -133,6 +155,10 @@ test("scoreItem", () => {
   expect(pathMatch.labelMatch?.length).toBe(1);
   expect(pathMatch.labelMatch?.[0].start).toBe(7);
   expect(pathMatch.labelMatch?.[0].end).toBe(10);
+  expect(pathMatch.label).toBe("someKey123");
+  expect(pathMatch.description).toBe("xyz.some.path");
+  expect(pathMatch.rawValue).toBe("2022-01-01T00:00:00.000Z");
+  expect(pathMatch.formattedValue).toBe("Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)");
 
   const rawValueMatch = scoreItem(jsonPath, "-", true, jsonHeroPathAccessor);
   expect(rawValueMatch.score).toBeGreaterThan(0);
@@ -143,6 +169,12 @@ test("scoreItem", () => {
   expect(rawValueMatch.rawValueMatch?.length).toBe(1);
   expect(rawValueMatch.rawValueMatch?.[0].start).toBe(7);
   expect(rawValueMatch.rawValueMatch?.[0].end).toBe(8);
+  expect(rawValueMatch.label).toBe("someKey123");
+  expect(rawValueMatch.description).toBe("xyz.some.path");
+  expect(rawValueMatch.rawValue).toBe("2022-01-01T00:00:00.000Z");
+  expect(rawValueMatch.formattedValue).toBe(
+    "Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)",
+  );
 
   const formattedValueMatch = scoreItem(jsonPath, "wich", true, jsonHeroPathAccessor);
   expect(formattedValueMatch.score).toBeGreaterThan(0);
@@ -153,6 +185,12 @@ test("scoreItem", () => {
   expect(formattedValueMatch.formattedValueMatch?.length).toBe(1);
   expect(formattedValueMatch.formattedValueMatch?.[0].start).toBe(40);
   expect(formattedValueMatch.formattedValueMatch?.[0].end).toBe(44);
+  expect(formattedValueMatch.label).toBe("someKey123");
+  expect(formattedValueMatch.description).toBe("xyz.some.path");
+  expect(formattedValueMatch.rawValue).toBe("2022-01-01T00:00:00.000Z");
+  expect(formattedValueMatch.formattedValue).toBe(
+    "Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)",
+  );
 
   const valueMatch = scoreItem(jsonPath, "2022", true, jsonHeroPathAccessor);
   expect(valueMatch.score).toBeGreaterThan(0);
@@ -166,6 +204,10 @@ test("scoreItem", () => {
   expect(valueMatch.formattedValueMatch?.length).toBe(1);
   expect(valueMatch.formattedValueMatch?.[0].start).toBe(11);
   expect(valueMatch.formattedValueMatch?.[0].end).toBe(15);
+  expect(valueMatch.label).toBe("someKey123");
+  expect(valueMatch.description).toBe("xyz.some.path");
+  expect(valueMatch.rawValue).toBe("2022-01-01T00:00:00.000Z");
+  expect(valueMatch.formattedValue).toBe("Sat Jan 01 2022 00:00:00 GMT+0000 (Greenwich Mean Time)");
 
   // No Match
   const noMatch = scoreItem(jsonPath, "987", true, jsonHeroPathAccessor);
