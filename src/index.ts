@@ -5,4 +5,4 @@ export {
   JSONHeroSearchFormatter,
 } from "./JSONHeroSearch";
 export { search, SearchResult } from "./search";
-export { ItemScore } from "./fuzzyScoring";
+export { ItemScore, scoreFuzzy } from "./fuzzyScoring";
