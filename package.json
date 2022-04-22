@@ -1,6 +1,6 @@
 {
   "name": "@jsonhero/fuzzy-json-search",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "VSCode style fuzzy search for JSON documents",
   "homepage": "https://github.com/jsonhero-io/fuzzy-json-search",
   "bugs": {
